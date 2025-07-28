@@ -27,7 +27,7 @@ const CarForm = () => {
   useEffect(() => {
     const fetchCar = async () => {
       try {
-        const res = await axios.get(`/api/cars/${id}`);
+        const res = await axios.get(`https://chalocar.onrender.com/api/cars/${id}`); //change by me
         const car = res.data;
         setMake(car.make);
         setModel(car.model);
@@ -86,9 +86,9 @@ const CarForm = () => {
       };
 
       if (isEdit) {
-        await axios.put(`/api/cars/${id}`, formData, config);
+        await axios.put(`https://chalocar.onrender.com/api/cars/${id}`, formData, config);
       } else {
-        await axios.post('/api/cars', formData, config);
+        await axios.post('https://chalocar.onrender.com/api/cars', formData, config);
       }
 
       navigate('/admin/cars');

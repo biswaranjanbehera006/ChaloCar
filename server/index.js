@@ -9,7 +9,12 @@ dotenv.config();
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: "https://chalo-car.vercel.app", // your frontend domain
+  credentials: true,
+}));     //update by me
+
+
 app.use(express.json());
 
 // MongoDB Connection
