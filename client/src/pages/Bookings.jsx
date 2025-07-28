@@ -25,7 +25,7 @@ const Bookings = () => {
   useEffect(() => {
     const fetchCar = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/cars/${id}`);
+        const res = await axios.get(`https://chalocar.onrender.com/api/cars/${id}`); //change by me 
         setCar(res.data);
       } catch (err) {
         console.error('Error fetching car:', err);
@@ -98,7 +98,7 @@ const Bookings = () => {
         location,
       };
 
-      const response = await axios.post('http://localhost:5000/api/bookings', bookingData, {
+      const response = await axios.post('https://chalocar.onrender.com/api/bookings', bookingData, {//change by me
         headers: { Authorization: `Bearer ${token}` },
       });
 

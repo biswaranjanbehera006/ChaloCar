@@ -21,7 +21,7 @@ const MyBookings = () => {
     }
 
     try {
-      const res = await axios.get(`http://localhost:5000/api/bookings/user`, {
+      const res = await axios.get(`https://chalocar.onrender.com/api/bookings/user`, {  //chnage by me
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -45,7 +45,7 @@ const MyBookings = () => {
     setCancelingId(bookingId);
 
     try {
-      await axios.delete(`http://localhost:5000/api/bookings/${bookingId}`, {
+      await axios.delete(`https://chalocar.onrender.com/api/bookings/${bookingId}`, { //change by me
         headers: {
           Authorization: `Bearer ${token}`,
         },

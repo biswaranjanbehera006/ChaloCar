@@ -1,7 +1,7 @@
 
 import axios from "axios";
 
-const API = axios.create({ baseURL: "http://localhost:5000/api" });
+const API = axios.create({ baseURL: "https://chalocar.onrender.com/api" }); //change by me
 
 API.interceptors.request.use((req) => {
   const user = JSON.parse(localStorage.getItem("user"));

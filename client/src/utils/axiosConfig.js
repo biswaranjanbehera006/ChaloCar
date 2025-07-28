@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'http://localhost:5000', // Replace with your backend port
+  baseURL: 'https://chalocar.onrender.com', // change by me
 });
 
 instance.interceptors.request.use((config) => {

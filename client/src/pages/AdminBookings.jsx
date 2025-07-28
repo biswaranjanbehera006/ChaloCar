@@ -17,7 +17,7 @@ const AdminBookings = () => {
   const fetchBookings = async () => {
     try {
       setLoading(true);
-      const res = await axios.get("http://localhost:5000/api/bookings", {
+      const res = await axios.get("https://chalocar.onrender.com/api/bookings", { //i change this url
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -46,8 +46,8 @@ const AdminBookings = () => {
       setActionLoading(id, action, true);
       const endpoint =
         action === "approve"
-          ? `http://localhost:5000/api/bookings/${id}/approve`
-          : `http://localhost:5000/api/bookings/${id}/decline`;
+          ? `https://chalocar.onrender.com/api/bookings/${id}/approve`   //change by me
+          : `https://chalocar.onrender.com/api/bookings/${id}/decline`;  // chnage by me 
 
       await axios.put(endpoint, {}, {
         headers: {
@@ -65,7 +65,7 @@ const AdminBookings = () => {
   const deleteBooking = async (id) => {
     try {
       setActionLoading(id, "delete", true);
-      await axios.delete(`http://localhost:5000/api/bookings/admin/${id}`, {
+      await axios.delete(`https://chalocar.onrender.com/api/bookings/admin/${id}`, { //change by me 
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },

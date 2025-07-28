@@ -29,7 +29,7 @@ const Register = () => {
     e.preventDefault();
     setError('');
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/register', formData);
+      const response = await axios.post('https://chalocar.onrender.com/api/auth/register', formData);//change by me
       console.log('Registered:', response.data);
       navigate('/login');
     } catch (err) {
