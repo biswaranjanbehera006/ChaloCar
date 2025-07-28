@@ -12,7 +12,8 @@ const AdminUsers = () => {
 
   const fetchUsers = async () => {
     try {
-      const res = await axios.get('/api/users', {
+      const res = await axios.get('https://chalocar.onrender.com/api/users', {
+
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       });
       setUsers(res.data);
@@ -29,7 +30,7 @@ const AdminUsers = () => {
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this user?')) {
       try {
-        await axios.delete(`/api/users/${id}`, {
+        await axios.delete(`https://chalocar.onrender.com/api/users/${id}`, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
         });
         toast.success('User deleted successfully');
