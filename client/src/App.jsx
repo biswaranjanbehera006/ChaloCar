@@ -43,8 +43,8 @@ import AdminNotifications from './pages/AdminNotifications';
 const AppRoutes = () => {
   const location = useLocation();
 
-  // Better logic to detect all admin routes
-  const hideNavbar = location.pathname.includes('/admin');
+  // Improved: detect if current path starts with "/admin"
+  const hideNavbar = /^\/admin/.test(location.pathname);
 
   return (
     <>
@@ -147,7 +147,7 @@ const AppRoutes = () => {
           }
         />
 
-        {/* Catch-all Fallback */}
+        {/* Fallback route */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
 
