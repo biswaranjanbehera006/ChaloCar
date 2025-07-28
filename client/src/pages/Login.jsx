@@ -1,16 +1,16 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
-import { useAuth } from '../context/AuthContext'; // ✅ make sure this path is correct
+import { useAuth } from '../context/AuthContext';
 
 const Login = () => {
   const navigate = useNavigate();
-  const { login } = useAuth(); // ✅ use context login to update state
+  const { login } = useAuth();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const [loading, setLoading] = useState(false); // ✅ Added loading state
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,9 +23,10 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     setError('');
+    setLoading(true); // ✅ Set loading
 
     try {
-      const res = await axios.post('https://chalocar.onrender.com/api/auth/login', { //chnage by me
+      const res = await axios.post('https://chalocar.onrender.com/api/auth/login', {
         username,
         password,
       });
@@ -37,12 +38,10 @@ const Login = () => {
         throw new Error('Invalid response from server');
       }
 
-      login(user); // ✅ Update context state
-      localStorage.setItem('token', token); // You can still store token separately if needed
+      login(user);
+      localStorage.setItem('token', token);
 
       const role = user?.role?.toLowerCase();
-
-      console.log('User Role:', role); // 🪵 Debug log
 
       if (role === 'admin') {
         navigate('/admin-dashboard');
@@ -52,15 +51,14 @@ const Login = () => {
     } catch (err) {
       console.error('Login Error:', err);
       setError(err.response?.data?.message || err.message || 'Login failed');
+    } finally {
+      setLoading(false); // ✅ Stop loading
     }
   };
 
-  // ... keep rest of your design code untouched
-
   return (
     <div className="min-h-screen relative flex flex-col items-center justify-start pt-24 p-4 overflow-hidden">
-
-      {/* 🖼️ Blurred Background Image */}
+      {/* Background */}
       <div
         className="absolute inset-0 -z-20 bg-cover bg-center"
         style={{
@@ -69,14 +67,14 @@ const Login = () => {
       />
       <div className="absolute inset-0 bg-black/30 backdrop-blur-md -z-10" />
 
-      {/* 🎴 Floating Cards */}
+      {/* Floating cards */}
       <div className="absolute inset-0 -z-5 overflow-hidden">
         <div className="w-[200px] h-[120px] bg-white/10 rounded-xl backdrop-blur-sm shadow-lg animate-float-slow absolute top-20 left-10 rotate-[15deg]" />
         <div className="w-[160px] h-[100px] bg-white/10 rounded-xl backdrop-blur-sm shadow-lg animate-float-fast absolute bottom-20 right-20 rotate-[-10deg]" />
         <div className="w-[180px] h-[110px] bg-white/10 rounded-xl backdrop-blur-sm shadow-lg animate-float-mid absolute top-[60%] left-[45%] rotate-[5deg]" />
       </div>
 
-      {/* 🔐 Login Box */}
+      {/* Login Box */}
       <div className="relative w-full max-w-md">
         <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-gray-500 via-gray-400 to-gray-600 blur-lg opacity-40 animate-pulse z-0" />
         <div className="relative z-10 bg-white/20 backdrop-blur-lg shadow-2xl rounded-2xl w-full p-8 border border-white/30">
@@ -123,9 +121,34 @@ const Login = () => {
 
             <button
               type="submit"
-              className="w-full bg-gray-800 hover:bg-gray-900 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 shadow-md hover:shadow-lg"
+              disabled={loading}
+              className={`w-full flex items-center justify-center gap-2 bg-gray-800 hover:bg-gray-900 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 shadow-md hover:shadow-lg ${
+                loading ? 'cursor-not-allowed opacity-70' : ''
+              }`}
             >
-              Login
+              {loading && (
+                <svg
+                  className="animate-spin h-5 w-5 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  />
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                  />
+                </svg>
+              )}
+              {loading ? 'Logging in...' : 'Login'}
             </button>
           </form>
 
@@ -138,7 +161,7 @@ const Login = () => {
         </div>
       </div>
 
-      {/* 📎 Footer */}
+      {/* Footer */}
       <footer className="mt-20 w-screen py-10 px-8 bg-black/60 backdrop-blur-md text-sm text-white flex flex-col md:flex-row items-start justify-between gap-8 border-t border-white/10">
         <div className="space-y-2">
           <h3 className="text-xl font-bold drop-shadow">ChaloCars</h3>
@@ -188,7 +211,7 @@ const Login = () => {
         </div>
       </footer>
 
-      {/* 🔼 Scroll To Top Button */}
+      {/* Scroll To Top Button */}
       {showScrollTop && (
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}

@@ -11,7 +11,12 @@ const ResetPassword = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const email = new URLSearchParams(location.search).get('email');
+  let email = '';
+  try {
+    email = new URLSearchParams(location.search).get('email');
+  } catch (err) {
+    console.error('URL parsing error:', err);
+  }
 
   useEffect(() => {
     if (!email) {
@@ -25,30 +30,31 @@ const ResetPassword = () => {
     setMessage('');
 
     if (!newPassword || !confirmPassword) {
-      setError('Both password fields are required');
+      setError('Both password fields are required.');
       return;
     }
 
     if (newPassword !== confirmPassword) {
-      setError('Passwords do not match');
+      setError('Passwords do not match.');
       return;
     }
 
     try {
-      const res = await axios.post('https://chalocar.onrender.com/api/auth/reset-password', { //chnage by me
+      const res = await axios.post('https://chalocar.onrender.com/api/auth/reset-password', {
         email,
         newPassword,
       });
+
       setMessage(res.data.message);
       setTimeout(() => navigate('/login'), 1500);
     } catch (err) {
-      setError(err.response?.data?.message || 'Something went wrong');
+      setError(err.response?.data?.message || 'Something went wrong.');
     }
   };
 
   return (
     <div className="min-h-screen flex flex-col justify-between relative">
-      {/* Background Image */}
+      {/* Background */}
       <div
         className="absolute inset-0 z-0"
         style={{
@@ -59,10 +65,10 @@ const ResetPassword = () => {
         }}
       />
 
-      {/* Overlay */}
+      {/* Dark Overlay */}
       <div className="absolute inset-0 bg-black opacity-50 z-0" />
 
-      {/* Main Content */}
+      {/* Content */}
       <div className="relative z-10 flex-grow flex items-center justify-center mt-20 px-4 py-16">
         <div className="w-full max-w-md bg-white bg-opacity-10 backdrop-blur-md shadow-2xl rounded-2xl px-8 py-10">
           <h2 className="text-3xl font-bold text-center text-white mb-6">Reset Password</h2>
@@ -88,6 +94,7 @@ const ResetPassword = () => {
                 className="w-full px-5 py-3 bg-white bg-opacity-90 rounded-md text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
                 placeholder="New password"
                 required
+                aria-label="New password"
               />
             </div>
 
@@ -99,6 +106,7 @@ const ResetPassword = () => {
                 className="w-full px-5 py-3 bg-white bg-opacity-90 rounded-md text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-400"
                 placeholder="Confirm password"
                 required
+                aria-label="Confirm password"
               />
             </div>
 

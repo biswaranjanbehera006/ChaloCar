@@ -7,20 +7,10 @@ const ForgotPassword = () => {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [verified, setVerified] = useState(false);
-
-  const handleVerify = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await axios.post('https://chalocar.onrender.com/api/auth/forgot-password', { email });  //change by me 
-      setMessage(res.data.message);
-      setVerified(true);
-    } catch (err) {
-      setMessage(err.response?.data?.message || 'Something went wrong');
-      setVerified(false);
-    }
-  };
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    document.title = 'Forgot Password | ChaloCar';
     document.body.style.overflow = 'hidden';
     document.documentElement.style.overflow = 'hidden';
     return () => {
@@ -28,6 +18,22 @@ const ForgotPassword = () => {
       document.documentElement.style.overflow = '';
     };
   }, []);
+
+  const handleVerify = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setMessage('');
+    try {
+      const res = await axios.post('https://chalocar.onrender.com/api/auth/forgot-password', { email });
+      setMessage(res.data.message || 'Verification link sent');
+      setVerified(true);
+    } catch (err) {
+      setMessage(err.response?.data?.message || 'Something went wrong');
+      setVerified(false);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="relative min-h-screen flex flex-col overflow-hidden">
@@ -50,11 +56,25 @@ const ForgotPassword = () => {
       <main className="flex-grow flex items-center justify-center px-4 py-12 mt-20 relative z-10">
         <div className="w-full max-w-md bg-white/20 backdrop-blur-lg rounded-xl p-8 shadow-2xl">
           <h2 className="text-3xl font-bold text-center text-gray-900 mb-6">Verify Email</h2>
-          {message && <p className="mb-4 text-sm text-black-600 text-center">{message}</p>}
+
+          {message && (
+            <p
+              className={`mb-4 text-sm text-center font-medium ${
+                verified ? 'text-green-700' : 'text-red-600'
+              }`}
+            >
+              {message}
+            </p>
+          )}
+
           <form onSubmit={handleVerify}>
+            <label htmlFor="email" className="block mb-2 font-medium text-gray-800">
+              Email address
+            </label>
             <input
+              id="email"
               type="email"
-              placeholder="Email address"
+              placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full px-4 py-2 mb-4 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -62,16 +82,17 @@ const ForgotPassword = () => {
             />
             <button
               type="submit"
-              className="w-full bg-gray-900 text-white py-2 rounded-lg hover:bg-gray-800 transition duration-300"
+              disabled={loading}
+              className="w-full bg-gray-900 text-white py-2 rounded-lg hover:bg-gray-800 transition duration-300 disabled:opacity-50"
             >
-              Verify Email
+              {loading ? 'Verifying...' : 'Verify Email'}
             </button>
           </form>
 
           {verified && (
             <a
               href={`/reset-password?email=${encodeURIComponent(email)}`}
-              className="w-full inline-block mt-4 bg-gray-900 text-white py-2 rounded-lg text-center hover:bg-green-700 transition duration-300"
+              className="w-full inline-block mt-4 bg-green-700 text-white py-2 rounded-lg text-center hover:bg-green-800 transition duration-300"
             >
               Proceed to reset password
             </a>

@@ -11,6 +11,7 @@ const Register = () => {
     password: '',
   });
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
 
   useEffect(() => {
@@ -28,36 +29,35 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setLoading(true);
     try {
-      const response = await axios.post('https://chalocar.onrender.com/api/auth/register', formData);//change by me
+      const response = await axios.post('https://chalocar.onrender.com/api/auth/register', formData);
       console.log('Registered:', response.data);
       navigate('/login');
     } catch (err) {
       console.error('Register Error:', err);
       setError(err.response?.data?.message || 'Registration failed');
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="min-h-screen relative flex flex-col items-center justify-start pt-24 p-4 overflow-hidden">
-      {/* 🖼️ Background Image */}
       <div
         className="absolute inset-0 -z-20 bg-cover bg-center"
         style={{
           backgroundImage: `url('https://images.unsplash.com/photo-1542751110-97427bbecf20?auto=format&fit=crop&w=1950&q=80')`,
         }}
       />
-      {/* 🔳 Grey Overlay */}
       <div className="absolute inset-0 bg-black/30 backdrop-blur-sm -z-10" />
 
-      {/* ✨ Floating Cards */}
       <div className="absolute inset-0 -z-5 overflow-hidden">
         <div className="w-[200px] h-[120px] bg-white/10 rounded-xl backdrop-blur-sm shadow-lg animate-float-slow absolute top-20 left-10 rotate-[15deg]" />
         <div className="w-[160px] h-[100px] bg-white/10 rounded-xl backdrop-blur-sm shadow-lg animate-float-fast absolute bottom-20 right-20 rotate-[-10deg]" />
         <div className="w-[180px] h-[110px] bg-white/10 rounded-xl backdrop-blur-sm shadow-lg animate-float-mid absolute top-[60%] left-[45%] rotate-[5deg]" />
       </div>
 
-      {/* 📝 Register Box (Grey Theme) */}
       <div className="relative w-full max-w-md">
         <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-gray-500 via-gray-400 to-gray-600 blur-lg opacity-40 animate-pulse z-0" />
         <div className="relative z-10 bg-white/20 backdrop-blur-lg shadow-2xl rounded-2xl w-full p-8 border border-white/30">
@@ -102,9 +102,28 @@ const Register = () => {
             />
             <button
               type="submit"
-              className="w-full bg-gray-800 hover:bg-gray-900 text-white font-semibold py-3 rounded-lg transition duration-300 shadow-md hover:shadow-lg"
+              className="w-full bg-gray-800 hover:bg-gray-900 text-white font-semibold py-3 rounded-lg transition duration-300 shadow-md hover:shadow-lg flex items-center justify-center"
+              disabled={loading}
             >
-              Register
+              {loading ? (
+                <svg className="w-5 h-5 animate-spin mr-2 text-white" fill="none" viewBox="0 0 24 24">
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 000 16v-4l-3 3 3 3v-4a8 8 0 01-8-8z"
+                  ></path>
+                </svg>
+              ) : (
+                'Register'
+              )}
             </button>
           </form>
           <p className="text-center text-sm mt-4 text-gray-700">
@@ -119,7 +138,6 @@ const Register = () => {
         </div>
       </div>
 
-      {/* 🔻 Footer */}
       <footer className="mt-20 w-screen py-10 px-8 bg-black/70 backdrop-blur-md text-sm text-white flex flex-col md:flex-row items-start justify-between gap-8 border-t border-white/10">
         <div className="space-y-2">
           <h3 className="text-xl font-bold drop-shadow">ChaloCars</h3>
@@ -164,7 +182,6 @@ const Register = () => {
         </div>
       </footer>
 
-      {/* 🔝 Scroll to top button */}
       {showScrollTop && (
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
