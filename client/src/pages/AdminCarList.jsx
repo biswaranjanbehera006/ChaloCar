@@ -19,7 +19,7 @@ const AdminCarList = () => {
         setError('Token not found. Please log in again.');
         return;
       }
-      const res = await axios.get('/api/cars', {
+      const res = await axios.get('https://chalocar.onrender.com/api/cars', {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (Array.isArray(res.data)) {
@@ -38,7 +38,7 @@ const AdminCarList = () => {
     if (window.confirm('Are you sure you want to delete this car?')) {
       try {
         const token = localStorage.getItem('token');
-        await axios.delete(`/api/cars/${id}`, {
+        await axios.delete(`https://chalocar.onrender.com/api/cars/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         fetchCars();
@@ -63,7 +63,7 @@ const AdminCarList = () => {
           playsInline
           className="absolute top-0 left-0 w-full h-full object-cover"
         >
-          <source src="/bg-video.mp4" type="video/mp4" />
+          <source src="https://chalocar.onrender.com/bg-video.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
         <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-60 backdrop-blur-sm"></div>
