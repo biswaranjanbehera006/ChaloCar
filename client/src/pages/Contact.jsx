@@ -13,7 +13,6 @@ const ContactUs = () => {
 
   const sendEmail = (e) => {
     e.preventDefault();
-
     emailjs
       .sendForm(
         "service_ltshinm",
@@ -22,45 +21,69 @@ const ContactUs = () => {
         "wCNyXQw-8vmyqhi6y"
       )
       .then(
-        (result) => {
-          console.log(result.text);
+        () => {
           setDone(true);
           formRef.current.reset();
         },
         (error) => {
-          console.log(error.text);
+          console.error(error.text);
         }
       );
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#e0e7ff] to-[#f8fafc] pt-28 pb-10 px-4 scroll-mt-24">
+    <div className="relative min-h-screen pt-28 pb-10 px-4 scroll-mt-24 overflow-hidden">
+      
+      {/* Background Video */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute top-0 left-0 w-full h-full object-cover z-[-1]"
+      >
+        <source src="/bg-video.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+
+      {/* Darker Overlay */}
+      <div className="absolute top-0 left-0 w-full h-full bg-black/60 z-[-1]" />
+
       {/* Header */}
-      <h1 className="text-3xl sm:text-4xl font-bold text-center text-slate-800 mb-8 sm:mb-12">
+      <h1 className="text-3xl sm:text-4xl font-bold text-center text-white mb-8 sm:mb-12 drop-shadow-lg">
         Contact Us
       </h1>
 
-      {/* Content */}
+      {/* Grid Layout */}
       <div className="w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-10">
+        
         {/* Contact Info */}
-        <div className="bg-white/30 backdrop-blur-md rounded-3xl shadow-xl p-6 sm:p-8 text-slate-800">
-          <h2 className="text-xl sm:text-2xl font-semibold mb-6">📞 Get in Touch</h2>
+        <div className="bg-white/15 backdrop-blur-md rounded-3xl shadow-2xl p-6 sm:p-8 text-white">
+          <h2 className="text-xl sm:text-2xl font-semibold mb-6 drop-shadow">
+            📞 Get in Touch
+          </h2>
           <div className="space-y-4 sm:space-y-6 text-base">
             <div className="flex items-center gap-3">
-              <Mail className="text-indigo-600" />
-              <span className="text-sm sm:text-base">eleenajena2002@gmail.com</span>
+              <Mail className="text-indigo-200" />
+              <span className="text-sm sm:text-base drop-shadow">
+                eleenajena2002@gmail.com
+              </span>
             </div>
             <div className="flex items-center gap-3">
-              <Phone className="text-indigo-600" />
-              <span className="text-sm sm:text-base">+91 8926145029</span>
+              <Phone className="text-indigo-200" />
+              <span className="text-sm sm:text-base drop-shadow">
+                +91 8926145029
+              </span>
             </div>
             <div className="flex items-center gap-3">
-              <MapPin className="text-indigo-600" />
-              <span className="text-sm sm:text-base">Bhubaneswar, Odisha, India</span>
+              <MapPin className="text-indigo-200" />
+              <span className="text-sm sm:text-base drop-shadow">
+                Bhubaneswar, Odisha, India
+              </span>
             </div>
           </div>
 
-          {/* Google Map */}
+          {/* Map */}
           <div className="mt-6 sm:mt-8 w-full h-52 sm:h-64 rounded-xl overflow-hidden shadow-lg border border-white/10">
             <iframe
               title="location"
@@ -79,9 +102,9 @@ const ContactUs = () => {
         <form
           ref={formRef}
           onSubmit={sendEmail}
-          className="bg-white/30 backdrop-blur-md rounded-3xl shadow-xl p-6 sm:p-8 space-y-5 sm:space-y-6"
+          className="bg-white/15 backdrop-blur-md rounded-3xl shadow-2xl p-6 sm:p-8 space-y-5 sm:space-y-6 text-white"
         >
-          <h2 className="text-xl sm:text-2xl font-semibold text-gray-800 mb-2">
+          <h2 className="text-xl sm:text-2xl font-semibold mb-2 drop-shadow">
             📬 Send a Message
           </h2>
 
@@ -90,7 +113,7 @@ const ContactUs = () => {
             name="name"
             placeholder="Your Name"
             required
-            className="w-full p-3 sm:p-4 rounded-xl bg-white/40 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+            className="w-full p-3 sm:p-4 rounded-xl bg-white/30 text-white placeholder-white/80 focus:outline-none focus:ring-2 focus:ring-indigo-400"
           />
 
           <input
@@ -98,7 +121,7 @@ const ContactUs = () => {
             name="email"
             placeholder="Your Email"
             required
-            className="w-full p-3 sm:p-4 rounded-xl bg-white/40 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+            className="w-full p-3 sm:p-4 rounded-xl bg-white/30 text-white placeholder-white/80 focus:outline-none focus:ring-2 focus:ring-indigo-400"
           />
 
           <input
@@ -106,7 +129,7 @@ const ContactUs = () => {
             name="subject"
             placeholder="Subject"
             required
-            className="w-full p-3 sm:p-4 rounded-xl bg-white/40 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+            className="w-full p-3 sm:p-4 rounded-xl bg-white/30 text-white placeholder-white/80 focus:outline-none focus:ring-2 focus:ring-indigo-400"
           />
 
           <textarea
@@ -114,18 +137,18 @@ const ContactUs = () => {
             rows="5"
             placeholder="Your Message"
             required
-            className="w-full p-3 sm:p-4 rounded-xl bg-white/40 text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-400 resize-none"
+            className="w-full p-3 sm:p-4 rounded-xl bg-white/30 text-white placeholder-white/80 focus:outline-none focus:ring-2 focus:ring-indigo-400 resize-none"
           />
 
           <button
             type="submit"
-            className="w-full bg-indigo-600 hover:bg-indigo-700 transition text-white font-semibold px-6 py-3 rounded-xl shadow-md"
+            className="w-full bg-indigo-600 hover:bg-indigo-700 transition text-white font-semibold px-6 py-3 rounded-xl shadow-lg"
           >
             Send Message
           </button>
 
           {done && (
-            <p className="text-green-600 font-medium mt-2 sm:mt-3">
+            <p className="text-green-200 font-medium mt-2 sm:mt-3">
               Message sent successfully! ✅
             </p>
           )}

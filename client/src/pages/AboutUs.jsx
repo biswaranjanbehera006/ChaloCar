@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import Footer from "../components/Footer";
 import { FaLinkedin, FaGithub } from "react-icons/fa";
+import { motion } from "framer-motion";
 
 const AboutUs = () => {
   useEffect(() => {
@@ -38,143 +39,136 @@ const AboutUs = () => {
     },
   ];
 
+  const fadeInProps = {
+    initial: { opacity: 0, y: 30 },
+    whileInView: { opacity: 1, y: 0 },
+    transition: { duration: 0.6, delay: 0.1 },
+    viewport: { once: true },
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#e0e7ff] to-[#f8fafc] pt-28 px-4">
-      <h1 className="text-4xl font-bold text-center text-slate-800 mb-12">About Us</h1>
+    <div className="relative min-h-screen pt-28 px-4 overflow-hidden">
+      {/* Background Video */}
+      <video
+        className="fixed top-0 left-0 w-full h-full object-cover z-[-2] hidden sm:block scale-110"
+        autoPlay
+        loop
+        muted
+        playsInline
+        src="/bg-video.mp4"
+      />
+
+      {/* Dark Overlay */}
+      <div className="fixed inset-0 bg-black/70 backdrop-blur-md z-[-1]" />
+
+      <h1 className="text-4xl font-bold text-center text-white drop-shadow-lg mb-12">About Us</h1>
 
       <div className="max-w-6xl mx-auto space-y-12 pb-20">
         {/* Who We Are */}
-        <section className="bg-white/30 backdrop-blur-md rounded-3xl shadow-xl p-8">
-          <h2 className="text-2xl font-semibold text-indigo-700 mb-4">🚗 Who We Are</h2>
-          <p className="text-gray-800 text-lg">
-            Welcome to <strong>Qlith Car Rental</strong> – your trusted platform
-            for renting cars, bikes, and even homes across India! We connect users
-            with affordable and flexible rental solutions powered by modern tech.
+        <motion.section {...fadeInProps} className="bg-white/10 backdrop-blur-lg rounded-3xl shadow-xl p-8">
+          <h2 className="text-2xl font-semibold text-white mb-4">🚗 Who We Are</h2>
+          <p className="text-gray-100 text-lg drop-shadow-sm">
+            Welcome to <strong>ChaloCars Rental</strong> – your trusted platform for renting cars, bikes, and even homes across India! We connect users with affordable and flexible rental solutions powered by modern tech.
           </p>
-        </section>
+        </motion.section>
 
         {/* Journey Timeline */}
-        <section className="relative border-l-4 border-indigo-500 pl-6 space-y-8">
-          <h2 className="text-2xl font-semibold text-indigo-700 mb-4">🕒 Our Journey</h2>
+        <motion.section {...fadeInProps} className="relative border-l-4 border-white pl-6 space-y-8">
+          <h2 className="text-2xl font-semibold text-white mb-4">🕒 Our Journey</h2>
           {[
-            { year: "2023", desc: "Started as a college project to simplify rentals." },
-            { year: "2024", desc: "Launched MVP using MERN stack and onboarded users." },
-            { year: "2025", desc: "Expanded pan-India with 5K+ users and scaling up." },
-          ].map((item, index) => (
-            <div key={index} className="relative ml-4 animate-fade-up duration-700">
-              <div className="absolute -left-4 top-2 w-3 h-3 bg-indigo-600 rounded-full" />
-              <h4 className="text-lg font-bold text-slate-700">{item.year}</h4>
-              <p className="text-gray-600">{item.desc}</p>
+            "Started as a college project to simplify rentals.",
+            "Launched MVP using MERN stack and onboarded users.",
+            "Expanded pan-India with 5K+ users and scaling up."
+          ].map((desc, index) => (
+            <div key={index} className="relative ml-4">
+              <div className="absolute -left-4 top-2 w-3 h-3 bg-white rounded-full" />
+              <h4 className="text-lg font-bold text-white">{2023 + index}</h4>
+              <p className="text-gray-200">{desc}</p>
             </div>
           ))}
-        </section>
+        </motion.section>
 
-        {/* 📈 Growth Chart */}
-        <section className="bg-white/30 backdrop-blur-md rounded-3xl shadow-xl p-8">
-          <h2 className="text-2xl font-semibold text-indigo-700 mb-6">📊 Growth & Market Value</h2>
-          <div className="w-full bg-white p-4 rounded-xl shadow-inner">
-            <div className="w-full h-4 bg-indigo-100 rounded-full mb-4">
-              <div className="h-full bg-indigo-600 rounded-full animate-[grow1_3s_ease-in-out_forwards] w-[40%]" />
-            </div>
-            <p className="text-gray-700 font-medium mb-1">2023: 100+ users</p>
-
-            <div className="w-full h-4 bg-indigo-100 rounded-full mb-4">
-              <div className="h-full bg-indigo-600 rounded-full animate-[grow2_3s_ease-in-out_forwards] w-[70%]" />
-            </div>
-            <p className="text-gray-700 font-medium mb-1">2024: 1000+ users</p>
-
-            <div className="w-full h-4 bg-indigo-100 rounded-full">
-              <div className="h-full bg-indigo-600 rounded-full animate-[grow3_3s_ease-in-out_forwards] w-[90%]" />
-            </div>
-            <p className="text-gray-700 font-medium">2025: 5000+ users | ₹50L+ market reach</p>
-          </div>
-        </section>
-
-        {/* 💬 Testimonials */}
-        <section className="bg-white/30 backdrop-blur-md rounded-3xl shadow-xl p-8">
-          <h2 className="text-2xl font-semibold text-indigo-700 mb-6">💬 What Users Say</h2>
-          <div className="grid sm:grid-cols-2 gap-6">
-            {[
-              {
-                user: "Amit Sharma",
-                feedback: "Qlith made my Goa trip seamless. Great car, great service!",
-              },
-              {
-                user: "Neha Verma",
-                feedback: "Easy to book, affordable rates, and reliable options. Loved it!",
-              },
-            ].map((t, idx) => (
-              <div
-                key={idx}
-                className="bg-white p-4 rounded-xl shadow-md border-l-4 border-indigo-400"
-              >
-                <p className="text-gray-700 italic">"{t.feedback}"</p>
-                <h4 className="mt-2 text-indigo-700 font-bold">– {t.user}</h4>
+        {/* Growth Chart */}
+        <motion.section {...fadeInProps} className="bg-white/10 backdrop-blur-lg rounded-3xl shadow-xl p-8">
+          <h2 className="text-2xl font-semibold text-white mb-6">📊 Growth & Market Value</h2>
+          <div className="w-full bg-white/20 p-4 rounded-xl shadow-inner">
+            {[40, 70, 90].map((width, i) => (
+              <div key={i}>
+                <div className="w-full h-4 bg-white/30 rounded-full mb-2">
+                  <div
+                    style={{ width: width }}
+                    className="h-full bg-white rounded-full transition-all duration-1000"
+                  />
+                </div>
+                <p className="text-white font-medium mb-1">
+                  {i === 0 && "2023: 100+ users"}
+                  {i === 1 && "2024: 1000+ users"}
+                  {i === 2 && "2025: 5000+ users | ₹50L+ market reach"}
+                </p>
               </div>
             ))}
           </div>
-        </section>
+        </motion.section>
 
-        {/* 🧩 Tech Stack */}
-        <section className="bg-white/30 backdrop-blur-md rounded-3xl shadow-xl p-8">
-          <h2 className="text-2xl font-semibold text-indigo-700 mb-4">🧩 Tech Stack</h2>
+        {/* Testimonials */}
+        <motion.section {...fadeInProps} className="bg-white/10 backdrop-blur-lg rounded-3xl shadow-xl p-8">
+          <h2 className="text-2xl font-semibold text-white mb-6">💬 What Users Say</h2>
+          <div className="grid sm:grid-cols-2 gap-6">
+            {["Amit Sharma", "Neha Verma"].map((user, idx) => (
+              <div key={idx} className="bg-white/20 p-4 rounded-xl shadow-md border-l-4 border-white">
+                <p className="text-white italic">
+                  {idx === 0
+                    ? '"ChaloCars made my Goa trip seamless. Great car, great service!"'
+                    : '"Easy to book, affordable rates, and reliable options. Loved it!"'}
+                </p>
+                <h4 className="mt-2 text-white font-bold">– {user}</h4>
+              </div>
+            ))}
+          </div>
+        </motion.section>
+
+        {/* Tech Stack */}
+        <motion.section {...fadeInProps} className="bg-white/10 backdrop-blur-lg rounded-3xl shadow-xl p-8">
+          <h2 className="text-2xl font-semibold text-white mb-4">🧩 Tech Stack</h2>
           <div className="flex flex-wrap justify-center gap-6">
             {["React", "Tailwind CSS", "Node.js", "Express", "MongoDB"].map((tech, i) => (
-              <div
-                key={i}
-                className="px-4 py-2 bg-white rounded-xl shadow text-indigo-700 font-semibold"
-              >
+              <div key={i} className="px-4 py-2 bg-white/20 rounded-xl shadow text-white font-semibold">
                 {tech}
               </div>
             ))}
           </div>
-        </section>
+        </motion.section>
 
-        {/* 🤝 Partners */}
-        <section className="bg-white/30 backdrop-blur-md rounded-3xl shadow-xl p-8">
-          <h2 className="text-2xl font-semibold text-indigo-700 mb-4">🤝 Our Partners</h2>
+        {/* Partners */}
+        <motion.section {...fadeInProps} className="bg-white/10 backdrop-blur-lg rounded-3xl shadow-xl p-8">
+          <h2 className="text-2xl font-semibold text-white mb-4">🤝 Our Partners</h2>
           <div className="flex justify-center items-center gap-10 flex-wrap">
-            {[
-              {
-                name: "Microsoft",
-                logo: "https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg",
-              },
-              {
-                name: "Google",
-                logo: "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg",
-              },
-              {
-                name: "Amazon",
-                logo: "https://1000logos.net/wp-content/uploads/2016/10/Amazon-Logo.png",
-              },
-            ].map((partner, idx) => (
+            {["Microsoft", "Google", "Amazon"].map((partner, idx) => (
               <img
                 key={idx}
-                src={partner.logo}
-                alt={partner.name}
+                src={`https://upload.wikimedia.org/wikipedia/commons/${idx === 0 ? "4/44/Microsoft_logo.svg" : idx === 1 ? "2/2f/Google_2015_logo.svg" : "6/62/Amazon.com-Logo.svg"
+                  }`}
+                alt={partner}
                 className="w-24 h-auto transition-transform duration-300 hover:scale-110"
               />
             ))}
           </div>
-        </section>
+        </motion.section>
 
-        {/* 👥 Team */}
-        <section className="bg-white/30 backdrop-blur-md rounded-3xl shadow-xl p-8">
-          <h2 className="text-2xl font-semibold text-indigo-700 mb-6">👥 Meet the Team</h2>
+        {/* Team Section */}
+        <motion.section {...fadeInProps} className="bg-white/10 backdrop-blur-lg rounded-3xl shadow-xl p-8">
+          <h2 className="text-2xl font-semibold text-white mb-6">👥 Meet the Team</h2>
           <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-6">
             {teamMembers.map((member, idx) => (
-              <div
-                key={idx}
-                className="text-center space-y-3 transform transition-transform duration-300 hover:scale-105"
-              >
+              <div key={idx} className="text-center space-y-3 transform transition-transform duration-300 hover:scale-105">
                 <img
                   src={member.img}
                   alt={member.name}
                   className="w-28 h-28 rounded-full mx-auto shadow-lg object-cover"
                 />
-                <h4 className="text-lg font-semibold text-slate-700">{member.name}</h4>
-                <p className="text-gray-600">{member.role}</p>
-                <div className="flex justify-center gap-4 text-indigo-600 text-xl">
+                <h4 className="text-lg font-semibold text-white">{member.name}</h4>
+                <p className="text-gray-300">{member.role}</p>
+                <div className="flex justify-center gap-4 text-white text-xl">
                   <a href={member.github} target="_blank" rel="noopener noreferrer">
                     <FaGithub />
                   </a>
@@ -185,16 +179,15 @@ const AboutUs = () => {
               </div>
             ))}
           </div>
-        </section>
+        </motion.section>
 
-        {/* 💰 Funding Info */}
-        <section className="bg-white/30 backdrop-blur-md rounded-3xl shadow-xl p-8">
-          <h2 className="text-2xl font-semibold text-indigo-700 mb-4">💰 Investors & Funding</h2>
-          <p className="text-gray-800 text-lg">
-            We're backed by early-stage angel investors and industry mentors, with
-            an initial seed funding of ₹10 Lakhs aimed at expanding reach and building infrastructure.
+        {/* Funding Info */}
+        <motion.section {...fadeInProps} className="bg-white/10 backdrop-blur-lg rounded-3xl shadow-xl p-8">
+          <h2 className="text-2xl font-semibold text-white mb-4">💰 Investors & Funding</h2>
+          <p className="text-gray-100 text-lg">
+            We're backed by early-stage angel investors and industry mentors, with an initial seed funding of ₹10 Lakhs aimed at expanding reach and building infrastructure.
           </p>
-        </section>
+        </motion.section>
       </div>
 
       <Footer />
