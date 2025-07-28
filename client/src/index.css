@@ -1,0 +1,59 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.input {
+  @apply w-full p-2 border mt-2;
+}
+.btn {
+  @apply bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700;
+}
+/* In your global CSS or Tailwind config */
+.footer-bg {
+  background-image: url('/images/footer.jpg'); /* correct path */
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  position: relative;
+  z-index: 0;
+}
+
+.footer-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.6); /* dark overlay */
+  z-index: -1;
+}
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-15px); }
+}
+@keyframes floatFast {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-30px); }
+}
+@keyframes floatMid {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+.animate-float-slow { animation: floatSlow 10s ease-in-out infinite; }
+.animate-float-fast { animation: floatFast 6s ease-in-out infinite; }
+.animate-float-mid { animation: floatMid 8s ease-in-out infinite; }
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #e0d4ff;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #a855f7;
+  border-radius: 10px;
+}
+
+/* Glowing Subscribe Button */
+.glow-button {
+  box-shadow: 0 0 12px rgba(236, 72, 153, 0.5), 0 0 24px rgba(236, 72, 153, 0.4);
+}
