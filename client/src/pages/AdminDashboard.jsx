@@ -140,7 +140,7 @@ const AdminDashboard = () => {
           {/* Mobile Menu */}
           {showMobileMenu && (
             <div className="flex flex-col gap-3 mt-4 md:hidden animate-slide-down text-white">
-              <button
+              {/* <button
                 onClick={() => {
                   navigate('/');
                   setShowMobileMenu(false);
@@ -157,7 +157,7 @@ const AdminDashboard = () => {
                 className="flex items-center gap-2 hover:text-blue-300 px-2"
               >
                 <Info className="w-4 h-4" /> About Us
-              </button>
+              </button> */}
               <button
                 onClick={() => {
                   navigate('/admin/dashboard');
