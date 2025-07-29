@@ -103,7 +103,7 @@ const AdminDashboard = () => {
 
             {/* Desktop Links */}
             <div className="hidden md:flex gap-6 items-center text-sm">
-              <button
+              {/* <button
                 onClick={() => navigate('/')}
                 className="flex items-center gap-1 hover:text-blue-300 transition"
               >
@@ -114,7 +114,7 @@ const AdminDashboard = () => {
                 className="flex items-center gap-1 hover:text-blue-300 transition"
               >
                 <Info className="w-4 h-4" /> About Us
-              </button>
+              </button> */}
               {/* <button
                 onClick={() => navigate('/admin/dashboard')}
                 className="flex items-center gap-1 hover:text-blue-300 transition"
