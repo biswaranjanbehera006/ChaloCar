@@ -10,7 +10,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [showScrollTop, setShowScrollTop] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false); // ✅ Added loading state
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,7 +23,7 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     setError('');
-    setLoading(true);
+    setLoading(true); // ✅ Set loading
 
     try {
       const res = await axios.post('https://chalocar.onrender.com/api/auth/login', {
@@ -52,12 +52,12 @@ const Login = () => {
       console.error('Login Error:', err);
       setError(err.response?.data?.message || err.message || 'Login failed');
     } finally {
-      setLoading(false);
+      setLoading(false); // ✅ Stop loading
     }
   };
 
   return (
-    <div className="min-h-screen flex flex-col justify-between relative overflow-hidden">
+    <div className="min-h-screen relative flex flex-col items-center justify-start pt-24 p-4 overflow-hidden">
       {/* Background */}
       <div
         className="absolute inset-0 -z-20 bg-cover bg-center"
@@ -74,97 +74,95 @@ const Login = () => {
         <div className="w-[180px] h-[110px] bg-white/10 rounded-xl backdrop-blur-sm shadow-lg animate-float-mid absolute top-[60%] left-[45%] rotate-[5deg]" />
       </div>
 
-      {/* Main Content */}
-      <main className="flex-grow flex items-center justify-center px-4 py-20">
-        <div className="relative w-full max-w-md">
-          <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-gray-500 via-gray-400 to-gray-600 blur-lg opacity-40 animate-pulse z-0" />
-          <div className="relative z-10 bg-white/20 backdrop-blur-lg shadow-2xl rounded-2xl w-full p-8 border border-white/30">
-            <h2 className="text-3xl font-bold text-center text-gray-800 mb-6 drop-shadow-md">
-              Login to Your Account
-            </h2>
+      {/* Login Box */}
+      <div className="relative w-full max-w-md">
+        <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-gray-500 via-gray-400 to-gray-600 blur-lg opacity-40 animate-pulse z-0" />
+        <div className="relative z-10 bg-white/20 backdrop-blur-lg shadow-2xl rounded-2xl w-full p-8 border border-white/30">
+          <h2 className="text-3xl font-bold text-center text-gray-800 mb-6 drop-shadow-md">
+            Login to Your Account
+          </h2>
 
-            {error && (
-              <div className="mb-4 text-sm text-red-600 bg-red-100 px-4 py-2 rounded">
-                {error}
-              </div>
-            )}
+          {error && (
+            <div className="mb-4 text-sm text-red-600 bg-red-100 px-4 py-2 rounded">
+              {error}
+            </div>
+          )}
 
-            <form onSubmit={handleLogin} className="space-y-5">
-              <div>
-                <label className="block text-gray-700 font-medium mb-1">Username</label>
-                <input
-                  type="text"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  required
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white/50 placeholder-gray-600 text-gray-800"
-                  placeholder="Enter your username"
-                />
-              </div>
+          <form onSubmit={handleLogin} className="space-y-5">
+            <div>
+              <label className="block text-gray-700 font-medium mb-1">Username</label>
+              <input
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white/50 placeholder-gray-600 text-gray-800"
+                placeholder="Enter your username"
+              />
+            </div>
 
-              <div>
-                <label className="block text-gray-700 font-medium mb-1">Password</label>
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white/50 placeholder-gray-600 text-gray-800"
-                  placeholder="Enter your password"
-                />
-              </div>
+            <div>
+              <label className="block text-gray-700 font-medium mb-1">Password</label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white/50 placeholder-gray-600 text-gray-800"
+                placeholder="Enter your password"
+              />
+            </div>
 
-              <div className="text-right">
-                <Link to="/forgot-password" className="text-sm text-gray-600 hover:text-gray-900 font-medium">
-                  Forgot Password?
-                </Link>
-              </div>
-
-              <button
-                type="submit"
-                disabled={loading}
-                className={`w-full flex items-center justify-center gap-2 bg-gray-800 hover:bg-gray-900 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 shadow-md hover:shadow-lg ${
-                  loading ? 'cursor-not-allowed opacity-70' : ''
-                }`}
-              >
-                {loading && (
-                  <svg
-                    className="animate-spin h-5 w-5 text-white"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <circle
-                      className="opacity-25"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                    />
-                    <path
-                      className="opacity-75"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-                    />
-                  </svg>
-                )}
-                {loading ? 'Logging in...' : 'Login'}
-              </button>
-            </form>
-
-            <p className="mt-6 text-sm text-center text-gray-700">
-              Don't have an account?{' '}
-              <Link to="/register" className="text-gray-900 font-medium hover:underline">
-                Register
+            <div className="text-right">
+              <Link to="/forgot-password" className="text-sm text-gray-600 hover:text-gray-900 font-medium">
+                Forgot Password?
               </Link>
-            </p>
-          </div>
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className={`w-full flex items-center justify-center gap-2 bg-gray-800 hover:bg-gray-900 text-white font-semibold py-2 px-4 rounded-lg transition duration-300 shadow-md hover:shadow-lg ${
+                loading ? 'cursor-not-allowed opacity-70' : ''
+              }`}
+            >
+              {loading && (
+                <svg
+                  className="animate-spin h-5 w-5 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  />
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                  />
+                </svg>
+              )}
+              {loading ? 'Logging in...' : 'Login'}
+            </button>
+          </form>
+
+          <p className="mt-6 text-sm text-center text-gray-700">
+            Don't have an account?{' '}
+            <Link to="/register" className="text-gray-900 font-medium hover:underline">
+              Register
+            </Link>
+          </p>
         </div>
-      </main>
+      </div>
 
       {/* Footer */}
-      <footer className="w-full py-10 px-8 bg-black/60 backdrop-blur-md text-sm text-white flex flex-col md:flex-row items-start justify-between gap-8 border-t border-white/10">
+      <footer className="mt-20 w-screen py-10 px-8 bg-black/60 backdrop-blur-md text-sm text-white flex flex-col md:flex-row items-start justify-between gap-8 border-t border-white/10">
         <div className="space-y-2">
           <h3 className="text-xl font-bold drop-shadow">ChaloCars</h3>
           <p className="drop-shadow-sm text-white">Drive the future with style and comfort.</p>
