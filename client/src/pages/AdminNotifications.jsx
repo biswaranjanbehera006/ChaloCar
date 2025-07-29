@@ -20,7 +20,7 @@ const AdminNotifications = () => {
 
     setLoading(true);
     try {
-      await axios.post('/api/test/email', { email, message: text });
+      await axios.post('https://chalocar.onrender.com/api/test/email', { email, message: text });
       toast.success('✅ Reminder email sent successfully!');
       setEmail('');
       setText('');
