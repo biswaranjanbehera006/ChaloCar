@@ -59,12 +59,12 @@ const Login = () => {
   return (
     <div className="min-h-screen relative flex flex-col items-center justify-start pt-24 p-4 overflow-hidden">
       {/* Background */}
-      <div
-        className="absolute inset-0 -z-20 bg-cover bg-center"
-        style={{
-          backgroundImage: url('https://images.unsplash.com/photo-1542751110-97427bbecf20?auto=format&fit=crop&w=1950&q=80'),
-        }}
-      />
+     <div
+  className="absolute inset-0 -z-20 bg-cover bg-center"
+  style={{
+    backgroundImage: `url('https://images.unsplash.com/photo-1542751110-97427bbecf20?auto=format&fit=crop&w=1950&q=80')`,
+  }}
+/>
       <div className="absolute inset-0 bg-black/30 backdrop-blur-md -z-10" />
 
       {/* Floating cards */}
